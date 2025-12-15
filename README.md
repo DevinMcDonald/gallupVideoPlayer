@@ -4,7 +4,7 @@ React-based kiosk video player that reads a `videos.json` config, shows thumbnai
 ## Install
 1. Install (Docker)[https://docs.docker.com/engine/install/]
 2. run `make`
-3. Open browser and connect to https://<hostname>:8080 
+3. Open browser and connect to https://\<hostname\>:8080 
 
 ## Local development
 
