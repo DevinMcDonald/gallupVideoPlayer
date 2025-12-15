@@ -1,0 +1,88 @@
+{
+  "videos": [
+    {
+      "id": "coyote-badger",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Badger%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Badger%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Badger Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheBadger.png"
+    },
+    {
+      "id": "coyote-beaver",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Beavers%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Beavers%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Beavers Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheBeaver.png"
+    },
+    {
+      "id": "coyote-bluejay",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Blue%20Jays%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Blue%20Jays%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Blue Jays Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheBlueJay.png"
+    },
+    {
+      "id": "coyote-bobcat",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Bobcat%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Bobcat%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Bobcat Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheBobcat.png"
+    },
+    {
+      "id": "coyote-cougar",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Cougar%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Cougar%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Cougar Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheCougar.png"
+    },
+    {
+      "id": "coyote-deer",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Deer%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Deer%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Deer Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheDeer.png"
+    },
+    {
+      "id": "coyote-duck",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Duck%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Duck%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Duck Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheDuck.png"
+    },
+    {
+      "id": "coyote-giant",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Giant%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Giant%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Giant Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheGiant.png"
+    },
+    {
+      "id": "coyote-lizard",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Lizards%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Lizards%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Lizards Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheLizard.png"
+    },
+    {
+      "id": "coyote-porcupine",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Porcupine%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Porcupine%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Porcupine Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndThePorcupine.png"
+    },
+    {
+      "id": "coyote-rabbit",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Rabbit%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Rabbit%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Rabbit Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheRabbit.png"
+    },
+    {
+      "id": "coyote-skunk",
+      "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Skunk%20Full%20Audio.mp4",
+      "remoteSrc": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/videos/Coyote%20and%20the%20Skunk%20Full%20Audio.mp4",
+      "cachedSrc": "/videos/Coyote and the Skunk Full Audio.mp4",
+      "thumbnailImage": "/thumbnails/CoyoteAndTheSkunk.png"
+    }
+  ]
+}
