@@ -124,17 +124,17 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px;
+  padding: 0;
   z-index: 5;
 }
 
 .player {
-  width: min(96vw, 1200px);
-  max-height: 90vh;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
   background: #000;
+  border: none;
+  border-radius: 0;
   opacity: 0;
   transition: opacity 180ms ease;
 }
