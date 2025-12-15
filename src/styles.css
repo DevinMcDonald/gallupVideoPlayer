@@ -135,6 +135,12 @@ p {
   overflow: hidden;
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
   background: #000;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.player.player--ready {
+  opacity: 1;
 }
 
 @media (max-width: 640px) {

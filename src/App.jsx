@@ -118,16 +118,16 @@ const VideoGrid = ({ videos, onSelect, generatedThumbnails }) => {
 const VideoPlayer = ({ video, onExit }) => {
   const playerRef = useRef(null);
   const [currentSrc, setCurrentSrc] = useState(video.resolvedSrc || video.src);
+  const [isReady, setIsReady] = useState(false);
 
   const poster = video.thumbnailImage;
 
   useEffect(() => {
     setCurrentSrc(video.resolvedSrc || video.src);
+    setIsReady(false);
     const element = playerRef.current;
     if (element) {
-      element.play().catch(() => {
-        /* Autoplay might be blocked; user interaction already happened to start playback. */
-      });
+      element.load();
     }
   }, [video.id, video.resolvedSrc, video.src]);
 
@@ -148,18 +148,29 @@ const VideoPlayer = ({ video, onExit }) => {
     }
   };
 
+  const handleCanPlay = () => {
+    const element = playerRef.current;
+    setIsReady(true);
+    if (element) {
+      element.play().catch(() => {
+        /* Autoplay might be blocked; user interaction already happened to start playback. */
+      });
+    }
+  };
+
   return (
     <div className="player-backdrop" onClick={handleInteraction} onTouchStart={handleInteraction}>
       <video
         key={video.id}
         ref={playerRef}
-        className="player"
+        className={`player${isReady ? ' player--ready' : ''}`}
         src={currentSrc}
         poster={poster}
         controls={false}
         playsInline
         onEnded={onExit}
         onError={handleError}
+        onCanPlay={handleCanPlay}
       />
     </div>
   );
