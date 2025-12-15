@@ -1,6 +1,10 @@
 # Gallup Video Player
 
 React-based kiosk video player that reads a `videos.json` config, shows thumbnails, and plays videos full-screen. Any tap/click while a video is playing stops playback and returns to the home screen.
+## Install
+1. Install (Docker)[https://docs.docker.com/engine/install/]
+2. run `make`
+3. Open browser and connect to https://<hostname>:8080 
 
 ## Local development
 
