@@ -109,6 +109,7 @@ If you don’t have the AWS CLI, install it first: https://docs.aws.amazon.com/c
    ```
    - Downloads any HTTP/HTTPS `src` to `public/videos/<filename>`.
    - Adds a `cachedSrc` field in `videos.json` pointing to the local copy.
+   - Removes any unused files from `public/videos` so stale downloads don’t pile up.
 3) Build the Docker image (`make` or `npm run build && docker build ...`). The downloaded videos are baked into the image, so playback won’t hit R2 unless the cached file fails (the player falls back to `src`).
 
 Note: `.gitignore` excludes `public/videos/`, so the large media stay out of git.

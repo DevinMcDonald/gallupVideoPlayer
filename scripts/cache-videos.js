@@ -123,6 +123,7 @@ const downloadFile = async (url, dest) => {
 
 const main = async () => {
   ensureDir(videosDir);
+  const neededFiles = new Set();
 
   const raw = await fs.promises.readFile(videosJsonPath, 'utf8');
   const data = JSON.parse(raw);
@@ -139,6 +140,7 @@ const main = async () => {
     const fileName = decodeURIComponent(path.basename(urlObj.pathname));
     const destPath = path.join(videosDir, fileName);
     const publicPath = `/videos/${fileName}`;
+    neededFiles.add(destPath);
 
     if (!fs.existsSync(destPath)) {
       console.log(`Downloading ${video.src} -> ${publicPath}`);
@@ -155,6 +157,18 @@ const main = async () => {
     if (!video.cachedSrc || video.cachedSrc !== publicPath) {
       video.cachedSrc = publicPath;
       changed = true;
+    }
+  }
+
+  const existingFiles = await fs.promises.readdir(videosDir);
+  for (const file of existingFiles) {
+    if (file.startsWith('.')) continue;
+    const fullPath = path.join(videosDir, file);
+    const stat = await fs.promises.stat(fullPath);
+    if (!stat.isFile()) continue;
+    if (!neededFiles.has(fullPath)) {
+      await fs.promises.unlink(fullPath);
+      console.log(`Removed unused cached file: ${path.join('/videos', file)}`);
     }
   }
 
