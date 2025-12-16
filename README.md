@@ -108,8 +108,8 @@ If you don’t have the AWS CLI, install it first: https://docs.aws.amazon.com/c
    npm run cache:videos   # or: make cache
    ```
    - Downloads any HTTP/HTTPS `src` to `public/videos/<filename>`.
-   - Adds `cachedSrc` and `remoteSrc` fields in `videos.json`, pointing to the local copy and original URL.
-3) Build the Docker image (`make` or `npm run build && docker build ...`). The downloaded videos are baked into the image, so playback won’t hit R2 unless the local copy fails.
+   - Adds a `cachedSrc` field in `videos.json` pointing to the local copy.
+3) Build the Docker image (`make` or `npm run build && docker build ...`). The downloaded videos are baked into the image, so playback won’t hit R2 unless the cached file fails (the player falls back to `src`).
 
 Note: `.gitignore` excludes `public/videos/`, so the large media stay out of git.
 
@@ -121,4 +121,4 @@ Note: `.gitignore` excludes `public/videos/`, so the large media stay out of git
   - run the container with bind mounts:
     - `public/videos` → `/usr/share/nginx/html/videos`
     - `public/thumbnails` → `/usr/share/nginx/html/thumbnails`
-- This keeps the image small and uses your local media without re-downloading. Remote URLs in `videos.json` are still present as fallback.
+- This keeps the image small and uses your local media without re-downloading. `src` URLs in `videos.json` are still present as fallback.

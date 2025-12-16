@@ -141,8 +141,8 @@ const VideoPlayer = ({ video, onExit }) => {
   };
 
   const handleError = () => {
-    if (video.remoteSrc && currentSrc !== video.remoteSrc) {
-      setCurrentSrc(video.remoteSrc);
+    if (currentSrc !== video.src) {
+      setCurrentSrc(video.src);
     } else {
       onExit();
     }
@@ -195,7 +195,6 @@ const App = () => {
           ...video,
           id: video.id || `video-${index + 1}`,
           resolvedSrc: video.cachedSrc || video.src,
-          remoteSrc: video.remoteSrc || video.src,
         }));
         setVideos(normalized);
         setError('');

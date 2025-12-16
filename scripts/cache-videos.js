@@ -156,15 +156,11 @@ const main = async () => {
       video.cachedSrc = publicPath;
       changed = true;
     }
-    if (!video.remoteSrc) {
-      video.remoteSrc = video.src;
-      changed = true;
-    }
   }
 
   if (changed) {
     await fs.promises.writeFile(videosJsonPath, JSON.stringify({ videos }, null, 2));
-    console.log('Updated videos.json with cachedSrc/remoteSrc paths.');
+    console.log('Updated videos.json with cachedSrc paths.');
   } else {
     console.log('No changes to videos.json.');
   }
