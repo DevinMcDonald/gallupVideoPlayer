@@ -120,8 +120,6 @@ const VideoPlayer = ({ video, onExit }) => {
   const [currentSrc, setCurrentSrc] = useState(video.resolvedSrc || video.src);
   const [isReady, setIsReady] = useState(false);
 
-  const poster = video.thumbnailImage;
-
   useEffect(() => {
     setCurrentSrc(video.resolvedSrc || video.src);
     setIsReady(false);
@@ -131,7 +129,9 @@ const VideoPlayer = ({ video, onExit }) => {
     }
   }, [video.id, video.resolvedSrc, video.src]);
 
-  const handleInteraction = () => {
+  const handleInteraction = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
     const element = playerRef.current;
     if (element) {
       element.pause();
@@ -159,13 +159,15 @@ const VideoPlayer = ({ video, onExit }) => {
   };
 
   return (
-    <div className="player-backdrop" onClick={handleInteraction} onTouchStart={handleInteraction}>
+    <div
+      className={`player-backdrop${isReady ? ' player-backdrop--ready' : ''}`}
+      onPointerDown={handleInteraction}
+    >
       <video
         key={video.id}
         ref={playerRef}
         className={`player${isReady ? ' player--ready' : ''}`}
         src={currentSrc}
-        poster={poster}
         controls={false}
         playsInline
         onEnded={onExit}
@@ -179,6 +181,7 @@ const VideoPlayer = ({ video, onExit }) => {
 const App = () => {
   const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const [suppressHomeInteractions, setSuppressHomeInteractions] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -217,8 +220,21 @@ const App = () => {
     [],
   );
 
+  const handleExit = () => {
+    setSelectedVideo(null);
+    setSuppressHomeInteractions(true);
+    window.setTimeout(() => {
+      setSuppressHomeInteractions(false);
+    }, 450);
+  };
+
   return (
-    <div className="app" style={backgroundStyle}>
+    <div
+      className={`app${selectedVideo ? ' app--playing' : ''}${
+        suppressHomeInteractions ? ' app--suppress-home' : ''
+      }`}
+      style={backgroundStyle}
+    >
       <div className="app__content">
         <div className="home-panel">
           {loading ? <div className="status">Loading videos…</div> : null}
@@ -234,7 +250,7 @@ const App = () => {
         </div>
       </div>
 
-      {selectedVideo ? <VideoPlayer video={selectedVideo} onExit={() => setSelectedVideo(null)} /> : null}
+      {selectedVideo ? <VideoPlayer video={selectedVideo} onExit={handleExit} /> : null}
     </div>
   );
 };
