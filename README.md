@@ -2,9 +2,9 @@
 
 React-based kiosk video player that reads a `videos.json` config, shows thumbnails, and plays videos full-screen. Any tap/click while a video is playing stops playback and returns to the home screen.
 ## Install
-1. Install (Docker)[https://docs.docker.com/engine/install/]
-2. run `make`
-3. Open browser and connect to https://\<hostname\>:8080 
+1. Run `npm install`
+2. Run `make`
+3. Open a browser at `http://<hostname>:8080`
 
 ## Local development
 
@@ -62,24 +62,14 @@ npm run build
 npm run preview   # serve the built assets locally
 ```
 
-## Docker
-
-Build and run:
-
-```bash
-docker build -t gallup-video-player .
-docker run -p 8080:80 gallup-video-player
-```
-
-The container serves the static build via nginx on port 80. Update `public/videos.json` and assets before building to bake them into the image.
-
 ### Makefile helper
 
 ```bash
-make          # builds the image and runs container on port 8080 by default
-PORT=3000 make run   # override host port
-make stop     # stop/remove the running container
-make logs     # follow container logs
+make               # cache videos, build, and run the preview server
+make dev           # run the Vite dev server (also caches videos)
+PORT=3000 make run # override host port
+make cache         # update cached videos and videos.json
+make clean         # remove dist/
 ```
 
 ### Uploading media to Cloudflare R2 (S3 API)
@@ -100,7 +90,7 @@ The script:
 
 If you don’t have the AWS CLI, install it first: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
-### Cache videos locally for Docker (avoid re-downloading)
+### Cache videos locally (avoid re-downloading)
 
 1) Ensure `public/videos.json` has the R2 URLs in `src`.
 2) Run the cache script:
@@ -110,16 +100,6 @@ If you don’t have the AWS CLI, install it first: https://docs.aws.amazon.com/c
    - Downloads any HTTP/HTTPS `src` to `public/videos/<filename>`.
    - Adds a `cachedSrc` field in `videos.json` pointing to the local copy.
    - Removes any unused files from `public/videos` so stale downloads don’t pile up.
-3) Build the Docker image (`make` or `npm run build && docker build ...`). The downloaded videos are baked into the image, so playback won’t hit R2 unless the cached file fails (the player falls back to `src`).
+3) Build the static app (`make` or `npm run build`). The downloaded videos live in `public/videos`, so playback won’t hit R2 unless the cached file fails (the player falls back to `src`).
 
 Note: `.gitignore` excludes `public/videos/`, so the large media stay out of git.
-
-### Runtime with bind-mounted media (preferred)
-- Place your videos in `public/videos/` and thumbnails in `public/thumbnails/` (or run `make cache` to pull from R2).
-- `make` (or `make run`) will:
-  - ensure those folders exist,
-  - build the image (videos are ignored by `.dockerignore` so they aren’t baked in),
-  - run the container with bind mounts:
-    - `public/videos` → `/usr/share/nginx/html/videos`
-    - `public/thumbnails` → `/usr/share/nginx/html/thumbnails`
-- This keeps the image small and uses your local media without re-downloading. `src` URLs in `videos.json` are still present as fallback.
