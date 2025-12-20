@@ -1,37 +1,27 @@
 .DEFAULT_GOAL := run
 
-IMAGE ?= gallup-video-player
-CONTAINER ?= gallup-video-player
+HOST ?= 0.0.0.0
 PORT ?= 8080
 MEDIA_VIDEOS ?= $(abspath public/videos)
 MEDIA_THUMBS ?= $(abspath public/thumbnails)
 
-.PHONY: build run stop logs clean cache ensure-media
+.PHONY: build run preview dev clean cache ensure-media
 
-build:
-	docker build -t $(IMAGE) .
+build: ensure-media
+	npm run build
 
-run: stop ensure-media build
-	docker run --name $(CONTAINER) -d -p $(PORT):80 \
-		-v "$(MEDIA_VIDEOS)":/usr/share/nginx/html/videos:ro \
-		-v "$(MEDIA_THUMBS)":/usr/share/nginx/html/thumbnails:ro \
-		$(IMAGE)
-	@echo "App running at http://localhost:$(PORT)"
+preview:
+	npm run preview -- --host $(HOST) --port $(PORT)
 
-stop:
-	@if docker ps -a --format '{{.Names}}' | grep -Eq '^$(CONTAINER)$$'; then \
-	  echo "Stopping/removing existing container $(CONTAINER)"; \
-	  docker rm -f $(CONTAINER); \
-	else \
-	  echo "No existing container named $(CONTAINER)"; \
-	fi
+run: cache build preview
 
-logs:
-	docker logs -f $(CONTAINER)
+dev: cache ensure-media
+	npm run dev -- --host $(HOST) --port $(PORT)
 
-clean: stop
+clean:
+	@rm -rf dist
 
-cache:
+cache: ensure-media
 	@node scripts/cache-videos.js
 
 ensure-media:
