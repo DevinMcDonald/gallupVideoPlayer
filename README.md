@@ -65,12 +65,12 @@ npm run preview   # serve the built assets locally
 ### Makefile helper
 
 ```bash
-make               # cache videos, build, and run the preview server
-make dev           # run the Vite dev server (also caches videos)
-PORT=3000 make run # override host port
+make               # build dist/ (one-time or when code changes)
+make build         # build dist/ (explicit)
 make cache         # update cached videos and videos.json
 make clean         # remove dist/
 ```
+Serving is handled separately (e.g., `npx serve dist`). Run `make build` on the device whenever the app code changes.
 
 ### Uploading media to Cloudflare R2 (S3 API)
 

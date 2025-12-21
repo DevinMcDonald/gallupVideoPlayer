@@ -1,22 +1,15 @@
-.DEFAULT_GOAL := run
+.DEFAULT_GOAL := build
 
-HOST ?= 0.0.0.0
-PORT ?= 8080
 MEDIA_VIDEOS ?= $(abspath public/videos)
 MEDIA_THUMBS ?= $(abspath public/thumbnails)
 
-.PHONY: build run preview dev clean cache ensure-media
+.PHONY: build serve clean cache ensure-media
 
 build: ensure-media
 	npm run build
 
-preview:
-	npm run preview -- --host $(HOST) --port $(PORT)
-
-run: cache build preview
-
-dev: cache ensure-media
-	npm run dev -- --host $(HOST) --port $(PORT)
+serve:
+	serve dist
 
 clean:
 	@rm -rf dist
