@@ -9,7 +9,7 @@ build: ensure-media
 	npm run build
 
 serve:
-	serve dist
+	python3 -m http.server 8080 --directory dist
 
 clean:
 	@rm -rf dist
