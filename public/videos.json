@@ -1,8 +1,8 @@
 {
   "background": {
-    "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/background/Neon%20Terrain%2080.mp4",
+    "src": "https://c136fa1b8c3288aba83c64f5193cd280.r2.cloudflarestorage.com/gallupvideoplayer/background/Background_Loop_2m_v1.mp4",
     "type": "video",
-    "cachedSrc": "/backgrounds/Neon Terrain 80.mp4"
+    "cachedSrc": "/backgrounds/Background_Loop_2m_v1.mp4"
   },
   "videos": [
     {
@@ -79,3 +79,4 @@
     }
   ]
 }
+
