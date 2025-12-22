@@ -28,12 +28,24 @@ p {
 
 .app {
   min-height: 100vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   position: relative;
   display: flex;
   align-items: stretch;
+}
+
+.app__background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.app__background-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .app__content {

@@ -1,4 +1,8 @@
 {
+  "background": {
+    "src": "/background.png",
+    "type": "image"
+  },
   "videos": [
     {
       "id": "coyote-giant",

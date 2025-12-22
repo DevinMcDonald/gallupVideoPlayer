@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename);
 const ROOT = path.resolve(__dirname, '..');
 const videosJsonPath = path.join(ROOT, 'public', 'videos.json');
 const videosDir = path.join(ROOT, 'public', 'videos');
+const backgroundsDir = path.join(ROOT, 'public', 'backgrounds');
 
 const loadEnvFile = (filePath) => {
   if (!filePath || !fs.existsSync(filePath)) return;
@@ -123,13 +124,48 @@ const downloadFile = async (url, dest) => {
 
 const main = async () => {
   ensureDir(videosDir);
+  ensureDir(backgroundsDir);
   const neededFiles = new Set();
+  const neededBackgroundFiles = new Set();
 
   const raw = await fs.promises.readFile(videosJsonPath, 'utf8');
   const data = JSON.parse(raw);
   const videos = data.videos || [];
+  const background = data.background;
 
   let changed = false;
+
+  if (background) {
+    const backgroundConfig = typeof background === 'string' ? { src: background } : { ...background };
+    if (backgroundConfig.src && isHttp(backgroundConfig.src)) {
+      const urlObj = new URL(backgroundConfig.src);
+      const fileName = decodeURIComponent(path.basename(urlObj.pathname));
+      const destPath = path.join(backgroundsDir, fileName);
+      const publicPath = `/backgrounds/${fileName}`;
+      neededBackgroundFiles.add(destPath);
+
+      if (!fs.existsSync(destPath)) {
+        console.log(`Downloading ${backgroundConfig.src} -> ${publicPath}`);
+        try {
+          await downloadFile(backgroundConfig.src, destPath);
+        } catch (err) {
+          console.error(`Failed to download background ${backgroundConfig.src}: ${err.message}`);
+        }
+      } else {
+        console.log(`Already cached: ${publicPath}`);
+      }
+
+      if (fs.existsSync(destPath) && backgroundConfig.cachedSrc !== publicPath) {
+        backgroundConfig.cachedSrc = publicPath;
+        changed = true;
+      }
+
+      if (typeof background === 'string' || !data.background || data.background.cachedSrc !== backgroundConfig.cachedSrc) {
+        data.background = backgroundConfig;
+        changed = true;
+      }
+    }
+  }
 
   for (const video of videos) {
     if (!video.src || !isHttp(video.src)) {
@@ -172,8 +208,22 @@ const main = async () => {
     }
   }
 
+  if (neededBackgroundFiles.size) {
+    const existingBackgrounds = await fs.promises.readdir(backgroundsDir);
+    for (const file of existingBackgrounds) {
+      if (file.startsWith('.')) continue;
+      const fullPath = path.join(backgroundsDir, file);
+      const stat = await fs.promises.stat(fullPath);
+      if (!stat.isFile()) continue;
+      if (!neededBackgroundFiles.has(fullPath)) {
+        await fs.promises.unlink(fullPath);
+        console.log(`Removed unused cached background file: ${path.join('/backgrounds', file)}`);
+      }
+    }
+  }
+
   if (changed) {
-    await fs.promises.writeFile(videosJsonPath, JSON.stringify({ videos }, null, 2));
+    await fs.promises.writeFile(videosJsonPath, JSON.stringify({ ...data, videos }, null, 2));
     console.log('Updated videos.json with cachedSrc paths.');
   } else {
     console.log('No changes to videos.json.');

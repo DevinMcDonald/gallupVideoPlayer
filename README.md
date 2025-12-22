@@ -21,6 +21,10 @@ Example:
 
 ```json
 {
+  "background": {
+    "src": "/background.png",
+    "type": "image"
+  },
   "videos": [
     {
       "id": "coyote-badger",
@@ -42,6 +46,11 @@ Example:
 ```
 
 Fields:
+- `background` (optional): background media config; can be a string path/URL or an object.
+  - `background.src`: image or video path/URL (local file under `public/` or an R2 URL).
+  - `background.type` (optional): `image` or `video` (auto-detected from extension if omitted).
+  - `background.poster` (optional): poster image to show before a video background loads.
+  - `background.cachedSrc` (optional): local cached path written by the cache script.
 - `id` (optional): unique identifier; auto-generated if omitted.
 - `title`: display name for the card.
 - `description` (optional): short helper copy.
@@ -51,7 +60,7 @@ Fields:
 
 ## Assets
 
-- Background lives at `public/background.png` (copied from `art/Home Screen BG.png`).
+- Background lives at `public/background.png` (copied from `art/Home Screen BG.png`) and can be replaced by an image or looping video configured in `public/videos.json`.
 - Place video files in `public/videos/`.
 - Place thumbnail images in `public/thumbnails/` (optional; otherwise use `thumbnailTime` for in-video frames).
 
@@ -98,7 +107,9 @@ If you don’t have the AWS CLI, install it first: https://docs.aws.amazon.com/c
    npm run cache:videos   # or: make cache
    ```
    - Downloads any HTTP/HTTPS `src` to `public/videos/<filename>`.
+   - Downloads any HTTP/HTTPS `background.src` to `public/backgrounds/<filename>`.
    - Adds a `cachedSrc` field in `videos.json` pointing to the local copy.
+   - Adds a `background.cachedSrc` field in `videos.json` pointing to the local copy.
    - Removes any unused files from `public/videos` so stale downloads don’t pile up.
 3) Build the static app (`make` or `npm run build`). The downloaded videos live in `public/videos`, so playback won’t hit R2 unless the cached file fails (the player falls back to `src`).
 

@@ -18,6 +18,7 @@ pnpm-debug.log*
 
 # Large media (kept outside git)
 public/videos/
+public/backgrounds/
 media/
 
 # Local secrets

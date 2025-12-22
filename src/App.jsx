@@ -2,7 +2,35 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 const CONFIG_PATH = '/videos.json';
 
-const defaultBackground = '/background.png';
+const defaultBackgroundImage = '/background.png';
+
+const inferBackgroundType = (src = '') => {
+  const cleaned = src.split('?')[0].split('#')[0];
+  const ext = cleaned.slice(cleaned.lastIndexOf('.')).toLowerCase();
+  if (['.mp4', '.webm', '.ogg'].includes(ext)) {
+    return 'video';
+  }
+  return 'image';
+};
+
+const normalizeBackground = (background) => {
+  if (!background) {
+    return { type: 'image', src: defaultBackgroundImage };
+  }
+  if (typeof background === 'string') {
+    const src = background || defaultBackgroundImage;
+    return { type: inferBackgroundType(src), src };
+  }
+  if (typeof background === 'object') {
+    const src = background.cachedSrc || background.src || defaultBackgroundImage;
+    return {
+      type: background.type || inferBackgroundType(src),
+      src,
+      poster: background.poster,
+    };
+  }
+  return { type: 'image', src: defaultBackgroundImage };
+};
 
 const loadThumbnailFromVideo = (videoConfig) =>
   new Promise((resolve, reject) => {
@@ -96,7 +124,7 @@ const VideoGrid = ({ videos, onSelect, generatedThumbnails }) => {
   return (
     <div className="video-grid">
       {videos.map((video) => {
-        const thumb = video.thumbnailImage || generatedThumbnails[video.id] || defaultBackground;
+        const thumb = video.thumbnailImage || generatedThumbnails[video.id] || defaultBackgroundImage;
         const label = video.title || video.id;
         return (
           <button
@@ -184,6 +212,8 @@ const App = () => {
   const [suppressHomeInteractions, setSuppressHomeInteractions] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [background, setBackground] = useState(() => normalizeBackground());
+  const [backgroundError, setBackgroundError] = useState(false);
 
   useEffect(() => {
     const loadConfig = async () => {
@@ -199,6 +229,8 @@ const App = () => {
           id: video.id || `video-${index + 1}`,
           resolvedSrc: video.cachedSrc || video.src,
         }));
+        setBackground(normalizeBackground(payload?.background));
+        setBackgroundError(false);
         setVideos(normalized);
         setError('');
       } catch (err) {
@@ -213,12 +245,12 @@ const App = () => {
 
   const generatedThumbnails = useGeneratedThumbnails(videos);
 
-  const backgroundStyle = useMemo(
-    () => ({
-      backgroundImage: `url('${defaultBackground}')`,
-    }),
-    [],
-  );
+  const resolvedBackground = useMemo(() => {
+    if (backgroundError) {
+      return { type: 'image', src: defaultBackgroundImage };
+    }
+    return background;
+  }, [background, backgroundError]);
 
   const handleExit = () => {
     setSelectedVideo(null);
@@ -233,8 +265,28 @@ const App = () => {
       className={`app${selectedVideo ? ' app--playing' : ''}${
         suppressHomeInteractions ? ' app--suppress-home' : ''
       }`}
-      style={backgroundStyle}
     >
+      <div className="app__background" aria-hidden="true">
+        {resolvedBackground.type === 'video' ? (
+          <video
+            className="app__background-media"
+            src={resolvedBackground.src}
+            poster={resolvedBackground.poster || defaultBackgroundImage}
+            autoPlay
+            loop
+            muted
+            playsInline
+            onError={() => setBackgroundError(true)}
+          />
+        ) : (
+          <img
+            className="app__background-media"
+            src={resolvedBackground.src}
+            alt=""
+            onError={() => setBackgroundError(true)}
+          />
+        )}
+      </div>
       <div className="app__content">
         <div className="home-panel">
           {loading ? <div className="status">Loading videos…</div> : null}

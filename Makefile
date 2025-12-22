@@ -2,6 +2,7 @@
 
 MEDIA_VIDEOS ?= $(abspath public/videos)
 MEDIA_THUMBS ?= $(abspath public/thumbnails)
+MEDIA_BACKGROUNDS ?= $(abspath public/backgrounds)
 
 .PHONY: build serve clean cache ensure-media
 
@@ -18,4 +19,4 @@ cache: ensure-media
 	@node scripts/cache-videos.js
 
 ensure-media:
-	@mkdir -p "$(MEDIA_VIDEOS)" "$(MEDIA_THUMBS)"
+	@mkdir -p "$(MEDIA_VIDEOS)" "$(MEDIA_THUMBS)" "$(MEDIA_BACKGROUNDS)"
